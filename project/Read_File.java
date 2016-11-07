@@ -1,8 +1,11 @@
 package test;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Read_File {
 	private String path;
@@ -26,8 +29,10 @@ public class Read_File {
 	}
 	private int readlines() throws IOException
 	{
-		FileReader file_to_read = new FileReader(path);
-		BufferedReader bf = new BufferedReader(file_to_read);
+		File fileDir = new File(path);
+		BufferedReader bf =  new BufferedReader(
+				   new InputStreamReader(
+		                      new FileInputStream(fileDir), "UTF8"));
 
 		String aLine;
 		int numberOfLines = 0;

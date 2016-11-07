@@ -1,11 +1,10 @@
-package project;
-
+package test;
 
 public class Match {
 	private String t1;
 	private String t2;
 	private String result;
-	
+
 	public Match(String t_1,String t_2, String res)
 	{
 	this.t1 = t_1;
