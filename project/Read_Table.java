@@ -2,7 +2,7 @@ package test;
 
 import java.io.IOException;
 
-public class File_Data {
+public class Read_Table {
 
 	String[] games;
 	public String[] read(int i)
