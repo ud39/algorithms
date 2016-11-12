@@ -58,28 +58,6 @@ public class ChampionShip_Test {
 		}
 	}
 
-	public static void setWins(String t) {
-
-		for (int i = day; i <= 33; i++) {
-			for (int j = 0; j <= 8; j++) {
-
-				if (table[i][j].getT1().equals(t)) {
-					table[i][j].setResult("S");
-					teams.get(table[i][j].getT1())
-							.setCurrent_points(teams.get(table[i][j].getT1()).getCurrent_points() + 3);
-					break;
-				}
-				if (table[i][j].getT2().equals(t)) {
-					table[i][j].setResult("N");
-					teams.get(table[i][j].getT2())
-							.setCurrent_points(teams.get(table[i][j].getT2()).getCurrent_points() + 3);
-					break;
-				}
-
-			}
-		}
-
-	}
 
 	public static void main(String args[]) throws IOException {
 		fill_Table();
@@ -101,8 +79,7 @@ public class ChampionShip_Test {
 			
 		
 		initScores();
-		setWins("Hamburger SV");
-		
+		check_1to5.check_Rule1("Hamburger SV");
 
 		for (Team t : teams.values()) {
 			System.out.println(t.getTeam_Name() + " " + t.getCurrent_points());
