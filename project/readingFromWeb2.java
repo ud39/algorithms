@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 package test;
+=======
+package	project;
+>>>>>>> test2
 
 import java.io.BufferedWriter;	
 import java.io.FileOutputStream;
@@ -24,14 +28,23 @@ public class readingFromWeb2 {
 		// Serviceobject erstellen um die Daten abzufragen
 		SportsdataSoap service = sportsdata.getSportsdataSoap();
 		//Hole Daten
+<<<<<<< HEAD
 		ArrayOfMatchdata arrMatchdata = service.getMatchdataByLeagueSaison("bl1", "2008");
 	
+=======
+		ArrayOfMatchdata arrMatchdata = service.getMatchdataByLeagueSaison("bl1", "2006");
+
+>>>>>>> test2
 		//Hole Matchdaten
 		Integer i = 19;
 		for(; i <= 34 ; i++){
 		String text;
 		ArrayList<String> arrString = new ArrayList<String>();
+<<<<<<< HEAD
 		List<Matchdata> mdata = arrMatchdata.getMatchdata();  
+=======
+		List<Matchdata> mdata = arrMatchdata.getMatchdata();
+>>>>>>> test2
 		for(Matchdata mdata2: mdata) { //Lese Matches aus
 			/*
 			  System.out.println("Liga: " + mdata2.getLeagueName() + " " + mdata2.getLeagueSaison() +
@@ -44,7 +57,11 @@ public class readingFromWeb2 {
 				//System.out.println(" Ergebnis "	+ mdata2.getMatchResults().getMatchResult().get(1).getPointsTeam1()+ ":" + mdata2.getMatchResults().getMatchResult().get(1).getPointsTeam2());
 				resultT1 = mdata2.getMatchResults().getMatchResult().get(0).getPointsTeam1();
 				resultT2 = mdata2.getMatchResults().getMatchResult().get(0).getPointsTeam2();
+<<<<<<< HEAD
 				
+=======
+
+>>>>>>> test2
 			} else { //Kein Endergebnis
 				//System.out.println(" Ergebnis "	+ mdata2.getPointsTeam1() + ":" + mdata2.getPointsTeam2());				
 				resultT1= -1;
@@ -54,7 +71,11 @@ public class readingFromWeb2 {
 			//Formatiert Spieltag, Team1 (Name), Team2 (Name), Ergebnis wie besprochen
 			//getrennt durch Komma
 			text = mdata2.getGroupOrderID() + ";" + mdata2.getNameTeam1() + ";" + mdata2.getNameTeam2() + ";";
+<<<<<<< HEAD
 					
+=======
+
+>>>>>>> test2
 			if(resultT1 < 0 || resultT2 < 0) { // Kein Ergebnis
 	    		text = text + "?\n";
 	    	} else if(resultT1 > resultT2) { // Sieg
@@ -63,8 +84,13 @@ public class readingFromWeb2 {
 				text = text + "N\n";
 			} else { // Unentschieden
 				text = text + "U\n";
+<<<<<<< HEAD
 			}	
 					
+=======
+			}
+
+>>>>>>> test2
 			arrString.add(text); //Speicher fürs schreiben in die Datei
 		}
 		
@@ -72,7 +98,11 @@ public class readingFromWeb2 {
 		Writer writer = null;
 		try {
 		    writer = new BufferedWriter(new OutputStreamWriter(
+<<<<<<< HEAD
 		          new FileOutputStream("/home/bas/Schreibtisch/2008/" + i.toString()), "utf-8"));
+=======
+		          new FileOutputStream("C:\\Users\\World\\Desktop\\2006\\" + i.toString() + ".txt")));
+>>>>>>> test2
 		    for(String s1: arrString) {
 		    	writer.write(s1);
 		    }
