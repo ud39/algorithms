@@ -65,7 +65,7 @@ public class readingFromWeb2 {
 				text = text + "U\n";
 			}
 
-			arrString.add(text); //Speicher fürs schreiben in die Datei
+			arrString.add(text); //Speicher fÃ¼rs schreiben in die Datei
 		}
 
 
