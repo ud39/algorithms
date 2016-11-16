@@ -9,12 +9,19 @@ public class Team {
 	private int reachable_point;
 	private Set<Integer> opponents;
 
+	
+	public Team(String name, int cur, int rea){
+		team_Name = name;
+		current_points = cur;
+		reachable_point = rea;
+	}
+	
 	public Team(String name, int cur, int rea, Set opp)
 	{
 		team_Name = name;
 		current_points = cur;
 		reachable_point = rea;
-		opponents = opp;
+		opponents = null;
 	}
 
 	public String getTeam_Name() {
@@ -38,6 +45,12 @@ public class Team {
 	}
 
 	public void setReachable_point(int reachable_point) {
+		this.reachable_point = reachable_point;
+	}
+	
+	public void setCurrent_Point_Reachable_Point(int current_points, int reachable_point)
+	{
+		this.current_points = current_points;
 		this.reachable_point = reachable_point;
 	}
 
