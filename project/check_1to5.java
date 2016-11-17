@@ -6,27 +6,31 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.swing.plaf.synth.SynthSplitPaneUI;
+
 
 public class check_1to5 {
 
-	private static HashMap<String, Team> teams = ChampionShip_Test.teams;
-	private static Collection<String> dic = teams.keySet();
-	static Set<String> loser = new HashSet<String>();
-	static Set<String> underdog = new HashSet<String>();
-	static Set<String >win = new HashSet<String>();
+	private HashMap<String, Team> teams;
+	private Collection<String> dic;
+	private Set<String> loser = new HashSet<String>();
+	private Set<String> underdog = new HashSet<String>();
+	private Set<String >win = new HashSet<String>();
 
-	static Match[][] table = ChampionShip_Test.table;
-	static int day = ChampionShip_Test.day;
+	private Match[][] table;
+	private int day ;
 
-	public check_1to5(HashMap<String, Team> teams, Set<String> set, String fav, Match[][] matches) {
+	public check_1to5(HashMap<String, Team> teams, Set<String> set, String fav, Match[][] matches,int day) {
 		this.teams = teams;
 		this.dic = set;
 		this.dic.remove(fav);
 		this.table = matches;
+		this.day = day;
 	}
 
-	public static boolean check_Rule1(String fav) {
-		int p_Max = teams.get(fav).getCurrent_points() + ((33-(day)) * 3);
+	
+	public boolean check_Rule1(String fav) {
+		int p_Max = teams.get(fav).getReachable_point();
 		for (String s : dic) {
 			if (p_Max < teams.get(s).getCurrent_points()) {
 				return false;
@@ -37,7 +41,7 @@ public class check_1to5 {
 
 	}
 
-	public static boolean check_Rule2(String fav) {
+	public boolean check_Rule2(String fav) {
 		
 		int p_Max = teams.get(fav).getCurrent_points();
 		for (String s : dic) {
@@ -47,13 +51,14 @@ public class check_1to5 {
 		}
 
 		for (String s : underdog) {
+			System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++"+ s + "--------------------------------------------");
 			setWins(s);
 		}
 		loser.addAll(underdog);
 		return true;
 	}
 
-	public static boolean check_Rule3(String fav) {
+	public  boolean check_Rule3(String fav) {
 		
 
 		int p_Max = teams.get(fav).getReachable_point();
@@ -85,7 +90,7 @@ public class check_1to5 {
 
 	// Menge win: Mannschaft muss alle Spiele verlieren! -> Teste ob, draw
 	// m�glich
-	public static boolean check_Rule4(String fav) {
+	public boolean check_Rule4(String fav) {
 
 		Set<String> draw = new HashSet<String>();
 		int p_Max = teams.get(fav).getReachable_point();
@@ -113,10 +118,13 @@ public class check_1to5 {
 		}
 		
 		loser.addAll(draw);
-		return true;
+		
+			return true;
+		
+		
 	}
 
-	public static boolean check_Rule5(String fav) {
+	public boolean check_Rule5(String fav) {
 
 		if (check_Rule1(fav) == true && check_Rule2(fav) == true && check_Rule3(fav) == true
 				&& check_Rule4(fav) == true) {
@@ -125,7 +133,7 @@ public class check_1to5 {
 		return false;
 	}
 	
-	public static void set_Rest()
+	public void set_Rest()
 	{
 		dic.removeAll(loser);
 		
@@ -135,26 +143,27 @@ public class check_1to5 {
 		
 		
 	}
-	public static void setWins(String t) {
-
+	public void setWins(String t) {
+		int k = 0;
+		for(Team t1 : teams.values())
+		{
+			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			System.out.println(t1.getCurrent_points() + " " + t1.getReachable_point() + " " + t1.getTeam_Name());
+		}
 		for (int i = day; i <= 33; i++) {
-			for (int j = 0; j <= 8; j++) {
-
+			for (int j = 0; j <= 8; j++) {		
 				if (table[i][j].getResult().equals("?")) {
-
 					if (table[i][j].getT1().equals(t)) {
 						table[i][j].setResult("S");
 						teams.get(table[i][j].getT1())
-						.setCurrent_Point_Reachable_Point(teams.get(table[i][j].getT1()).getCurrent_points() + 3 , teams.get(table[i][j].getT1()).getReachable_point() - 3);
-						teams.get(table[i][j].getT2()).setReachable_point(teams.get(table[i][j].getT2()).getReachable_point()-3);
-						break;
+						.setCurrent_Point_Reachable_Point(teams.get(table[i][j].getT1()).getCurrent_points() + 3  , teams.get(table[i][j].getT1()).getReachable_point());
+						teams.get(table[i][j].getT2()).setReachable_point(teams.get(table[i][j].getT2()).getReachable_point() - 3);
 					}
 					if (table[i][j].getT2().equals(t)) {
 						table[i][j].setResult("N");
 						teams.get(table[i][j].getT2())
-						.setCurrent_Point_Reachable_Point(teams.get(table[i][j].getT1()).getCurrent_points() + 3 , teams.get(table[i][j].getT1()).getReachable_point() - 3 );
-						teams.get(table[i][j].getT2()).setReachable_point(teams.get(table[i][j].getT2()).getReachable_point()-3);
-						break;
+						.setCurrent_Point_Reachable_Point(teams.get(table[i][j].getT2()).getCurrent_points() + 3, teams.get(table[i][j].getT2()).getReachable_point());
+						teams.get(table[i][j].getT1()).setReachable_point(teams.get(table[i][j].getT1()).getReachable_point());
 					}
 				}
 			}
@@ -162,7 +171,7 @@ public class check_1to5 {
 
 	}
 
-	public static void setLosses(String t) {
+	public void setLosses(String t) {
 		for (int i = day; i <= 33; i++) {
 			for (int j = 0; j <= 8; j++) {
 
@@ -170,24 +179,24 @@ public class check_1to5 {
 
 					if (table[i][j].getT1().equals(t)) {
 						table[i][j].setResult("N");
-						teams.get(table[i][j].getT1())
-						.setCurrent_Point_Reachable_Point(teams.get(table[i][j].getT2()).getCurrent_points() + 3 , teams.get(table[i][j].getT1()).getReachable_point() - 3);
-						teams.get(table[i][j].getT2()).setReachable_point(teams.get(table[i][j].getT2()).getReachable_point()-3);
-						break;
+						
+						teams.get(table[i][j].getT2())
+						.setCurrent_Point_Reachable_Point(teams.get(table[i][j].getT2()).getCurrent_points() + 3 , teams.get(table[i][j].getT2()).getReachable_point());
+						
+						teams.get(table[i][j].getT1()).setReachable_point(teams.get(table[i][j].getT1()).getReachable_point()-3);
 					}
 					if (table[i][j].getT2().equals(t)) {
 						table[i][j].setResult("S");
-						teams.get(table[i][j].getT2())
-						.setCurrent_Point_Reachable_Point(teams.get(table[i][j].getT1()).getCurrent_points() + 3 , teams.get(table[i][j].getT1()).getReachable_point() - 3);
+						teams.get(table[i][j].getT1())
+						.setCurrent_Point_Reachable_Point(teams.get(table[i][j].getT1()).getCurrent_points() + 3 , teams.get(table[i][j].getT1()).getReachable_point());
 						teams.get(table[i][j].getT2()).setReachable_point(teams.get(table[i][j].getT2()).getReachable_point()-3);
-						break;
 					}
 				}
 			}
 		}
 	}
 	
-	public static void setDraws(String t) {
+	public void setDraws(String t) {
 		for (int i = day; i <= 33; i++) {
 			for (int j = 0; j <= 8; j++) {
 
